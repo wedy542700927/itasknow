@@ -108,24 +108,20 @@
           - if task.status==3
             = link_to task.title,task_path(task),target: '_blank',class:'itask-danger'
         .col-md-5.text-right.itask-gray
-          -if task.updated_at.year==DateTime.now.year
-            -if task.updated_at.month==DateTime.now.month
-              -if task.updated_at.day==DateTime.now.day
-                -if task.updated_at.hour==DateTime.now.hour
-                  - if task.updated_at.min==DateTime.now.min
-                    - if task.updated_at.sec==DateTime.now.sec
-                      刚刚
-                    - else
-                      #{DateTime.now.sec-task.updated_at.sec}秒前
-                  - else 
-                    #{DateTime.now.min-task.updated_at.min}分钟前
-                -else
-                  #{DateTime.now.hour-task.updated_at.hour}个小时前
-              -else
-                #{DateTime.now.day-task.updated_at.day}天前
-            -else 
-              #{DateTime.now.month-task.updated_at.month}个月前
-          -else 
-            #{DateTime.now.year-task.updated_at.year}年前
+          -result=get_time(task.updated_at)
+          -if result[0]==0
+            刚刚
+          -if result[0]==1
+            #{result[1]}秒前
+          -if result[0]==2
+            #{result[1]}分钟前
+          -if result[0]==3
+            #{result[1]}个小时前
+          -if result[0]==4
+            #{result[1]}天前
+          -if result[0]==5
+            #{result[1]}个月前
+          -if result[0]==6
+            #{result[1]}年前
     #paginate
       = paginate @tasks, remote: true
