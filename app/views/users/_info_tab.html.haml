@@ -74,25 +74,26 @@
               中回复了
               =get_nickname(comment.to_user_id)
         .col-md-5.text-right.icomment-gray
-          -if comment.updated_at.year==DateTime.now.year
-            -if comment.updated_at.month==DateTime.now.month
-              -if comment.updated_at.day==DateTime.now.day
-                -if comment.updated_at.hour==DateTime.now.hour
-                  - if comment.updated_at.min==DateTime.now.min
-                    - if comment.updated_at.sec==DateTime.now.sec
+          -timenow=DateTime.now
+          -if comment.updated_at.year==timenow.year
+            -if comment.updated_at.month==timenow.month
+              -if comment.updated_at.day==timenow.day
+                -if comment.updated_at.hour==timenow.hour
+                  - if comment.updated_at.min==timenow.min
+                    - if comment.updated_at.sec==timenow.sec
                       刚刚
                     - else
-                      #{DateTime.now.sec-comment.updated_at.sec}秒前
+                      #{timenow.sec-comment.updated_at.sec}秒前
                   - else 
-                    #{DateTime.now.min-comment.updated_at.min}分钟前
+                    #{timenow.min-comment.updated_at.min}分钟前
                 -else
-                  #{DateTime.now.hour-comment.updated_at.hour}个小时前
+                  #{timenow.hour-comment.updated_at.hour}个小时前
               -else
-                #{DateTime.now.day-comment.updated_at.day}天前
+                #{timenow.day-comment.updated_at.day}天前
             -else 
-              #{DateTime.now.month-comment.updated_at.month}个月前
+              #{timenow.month-comment.updated_at.month}个月前
           -else 
-            #{DateTime.now.year-comment.updated_at.year}年前
+            #{timenow.year-comment.updated_at.year}年前
     #paginate
       = paginate @messages, remote: true   
   -else
