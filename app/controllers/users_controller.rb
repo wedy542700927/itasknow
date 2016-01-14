@@ -6,7 +6,7 @@ class UsersController < ApplicationController
   end
 
   def register_confirm
-    @user = User.new params.require(:user).permit(:username,:email,:password,:password_confirmation),credits: 10
+    @user = User.new params.require(:user).permit(:username,:nickname,:email,:password,:password_confirmation),credits: 10
     if @user.save
       #to_login @user
       session[:wait_active_email] = @user.email

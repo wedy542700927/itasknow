@@ -4,6 +4,8 @@
   .form-field.form-group
     = f.text_field :username, placeholder: '用户名', class: 'form-control username', required: true
   .form-field.form-group
+    = f.text_field :nickname, placeholder: '昵称', class: 'form-control nickname', required: true
+  .form-field.form-group
     = f.text_field :email, placeholder: '邮箱', class: 'form-control email', required: true
   .form-field.form-group
     = f.password_field :password, placeholder: '密码，最少6位', class: 'form-control password', required: true

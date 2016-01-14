@@ -32,6 +32,7 @@ module ApplicationHelper
   end
   def get_time(updated_at)
     result=[]
+    updated_at=updated_at.gmtime
     timenow=DateTime.now
     if updated_at.year==timenow.year
       if updated_at.month==timenow.month
