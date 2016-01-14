@@ -1,6 +1,5 @@
 #encoding: utf-8
 class ItasksController < ApplicationController
-  before_filter :require_login, only: [:search]
   def index
     res=Task
     order = 'tasks.updated_at desc'
