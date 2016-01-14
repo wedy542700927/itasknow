@@ -1,0 +1,30 @@
+= render partial: 'tasks/toolbar_upload_img', locals: {text_id: 'task_comment_content'}
+- if defined?(new_comment) && new_comment
+  - @comment = @task.comments.new
+.comment_form
+  - url = @comment.new_record? ? task_comments_path(@task) : task_comment_path(@task, @comment)
+  = form_for @comment, url: url, role: 'form', remote: true do |f|
+    .hidden
+      = f.text_field :to_user_id,id:'to_user_id'
+    .error#error_message
+    .form-group
+      %ul.nav.nav-tabs#preview_tab{role: "tablist"}
+        %li.active
+          = link_to (@comment.new_record? ? '发表评论' : '编辑评论'), '#edit', role: 'tab', 'data-toggle'=>'tab'
+        %li
+          = link_to '预览', '#preview', role: 'tab', 'data-toggle'=>'tab'
+      .tab-content
+        .tab-pane.active#edit
+          = f.text_area :content, placeholder: '评论内容', class: 'form-control'
+        .tab-pane#preview
+    .form-group
+      = f.submit '提交', class: 'btn btn-success btn-lg btn-block'
+
+:javascript
+  $(function(){
+    $('#preview_tab a[href="#preview"]').click(function(e){
+      e.preventDefault();
+      $(this).tab('show');
+      preview('task_comment_content', 'preview');
+    });
+  });

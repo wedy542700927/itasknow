@@ -1,0 +1,9 @@
+- if @result[:status]
+  :plain
+    $("#task_comment_content").val('');
+    $('#no_comments').remove();
+    $('#error_message').html("");
+    $("#{escape_javascript(render partial: 'tasks/comment', locals: {comment: @comment})}").insertBefore('#paginate');
+- else
+  :plain
+    $('#error_message').html("#{@result[:message]}");

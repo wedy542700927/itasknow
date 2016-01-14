@@ -1,0 +1,21 @@
+- if defined?(obj) && obj.present? && obj.errors.any?
+  .alert.alert-danger
+    %a.close{"data-dismiss"=>"alert"} &times;
+    %span
+      = obj.errors.full_messages.first
+- if flash[:success].present?
+  .alert.alert-success
+    %a.close{"data-dismiss"=>"alert"} &times;
+    %span
+      = flash[:success]
+- if flash[:error].present?
+  .alert.alert-danger
+    %a.close{"data-dismiss"=>"alert"} &times;
+    %span
+      = flash[:error]
+.col-md-2
+  %ul.nav.nav-pills.nav-stacked{role: 'tablist'}
+    %li{role: 'presentation', class: "#{'active' if params[:action] == 'set'}"}
+      = link_to '个人信息设置', set_users_path
+    %li{role: 'presentation', class: "#{'active' if params[:action] == 'change_password'}"}
+      = link_to '修改密码', change_password_users_path

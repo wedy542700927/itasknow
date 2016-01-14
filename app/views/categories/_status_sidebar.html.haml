@@ -1,0 +1,27 @@
+.col-md-2
+  %ul.nav.nav-pills.nav-stacked{role: 'tablist'}
+    %li.text-right{role: 'presentation', class: "#{'active' if !params[:status].present? }"}
+      = link_to  category_path(@category),class: 'text-info' do
+        全部
+        %span.label.label-info.label-count
+          = "#{get_tasks_count(@category)|| 0}"
+    %li.text-right{role: 'presentation', class: "#{'active' if params[:status] == '0'}"}
+      = link_to category_path(@category,:status=>0),class: 'text-success' do
+        待接受
+        %span.label.label-success.label-count
+          = "#{get_tasks_count(@category,0)|| 0}"
+    %li.text-right{role: 'presentation', class: "#{'active' if params[:status] == '1'}"}
+      = link_to category_path(@category,:status=>1),class: 'text-primary' do
+        进行中
+        %span.label.label-primary.label-count
+          = "#{get_tasks_count(@category,1)|| 0}"
+    %li.text-right{role: 'presentation', class: "#{'active' if params[:status] == '2'}"}
+      = link_to category_path(@category,:status=>2),class: 'text-warning' do
+        已完成
+        %span.label.label-warning.label-count
+          = "#{get_tasks_count(@category,2)|| 0}"
+    %li.text-right{role: 'presentation', class: "#{'active' if params[:status] == '3'}"}
+      = link_to category_path(@category,:status=>3),class: 'text-danger' do
+        已关闭
+        %span.label.label-danger.label-count
+          = "#{get_tasks_count(@category,3)|| 0}"

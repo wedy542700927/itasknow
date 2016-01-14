@@ -1,0 +1,7 @@
+- unless @itasks.present?
+  .jumbotron
+    %h2 什么也没有～
+- @itasks.each do |itask|
+  = render partial: 'itasks/itask', locals: {itask: itask}
+
+= paginate @itasks, remote: true if params[:controller] == 'itasks'

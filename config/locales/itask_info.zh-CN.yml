@@ -1,0 +1,10 @@
+#encoding: utf-8
+zh-CN:
+  activerecord:
+    models:
+      user_view: '任务'
+    attributes:
+      user_view:
+        itask_title: '主页名称'
+        name: '用户姓名'
+        description: '关于'

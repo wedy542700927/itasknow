@@ -1,0 +1,8 @@
+.tab-content
+  .tab-pane.active#itasks_tab
+    - @itasks.each do |itask|
+      = render partial: 'itask', locals: {itask: itask}
+  .tab-pane#categories_tab
+    - @categories.each do |category|
+      = render partial: 'categories/category', locals: {category: category}
+  .tab-pane#users_tab

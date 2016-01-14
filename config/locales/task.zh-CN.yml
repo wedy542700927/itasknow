@@ -1,0 +1,13 @@
+#encoding: utf-8
+zh-CN:
+  activerecord:
+    models:
+      task: '任务'
+    attributes:
+      task:
+        title: '标题'
+        award: '奖励'
+        credits: '积分'
+        category_id: '任务分类'
+        pledge: '保证金'
+        content: '内容'

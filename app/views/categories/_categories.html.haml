@@ -1,0 +1,7 @@
+- unless @categories.present?
+  .jumbotron
+    %h2 什么也没有～
+- @categories.each do |category|
+  = render partial: 'category', locals: {category: category}
+
+= paginate @categories, remote: true if params[:controller] == 'categories'

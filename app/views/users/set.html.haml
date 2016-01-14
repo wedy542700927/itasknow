@@ -1,0 +1,90 @@
+.row
+  %h3.set_title 设置
+  = render 'set_sidebar'
+  .col-md-8
+    = form_for :user, url: set_userinfo_users_path, role: 'form' do |f|
+      .form-group
+        %label{for: 'user_nickname'} 昵称
+        = f.text_field :nickname, value: @current_user.nickname, placeholder: '昵称', class: 'form-control', size: 10
+      .form-group
+        %label{for: 'user_avatar'} 头像
+        .row.text-left
+          .col-md-2#img_preview
+            %img#set_user_avatar{src: "#{avatar_url(@current_user)}"}
+          .col-md-8.avatar-field
+            = f.file_field :avatar
+        %label{for: 'user_name'} 真实姓名
+        = f.text_field :name, value: @current_user.name, placeholder: '真实姓名', class: 'form-control'
+      .form-group
+        %label{for: 'user_student_id'} 学号
+        = f.text_field :student_id, value: @current_user.student_id, placeholder: '学号', class: 'form-control'
+      .form-group
+        %label{for: 'user_email'} 联系邮箱
+        = f.text_field :email, value: @current_user.email, placeholder: '联系邮箱', class: 'form-control'
+      .form-group
+        %label{for: 'user_description'} 个人说明
+        = f.text_area :description, value: @current_user.description, placeholder: '个人说明', class: 'form-control itask-description'
+      .form-group
+        = f.submit '修改', class: 'btn btn-primary set-btn'
+
+
+:javascript
+  function previewImage(file){
+    var MAXWIDTH  = 80;
+    var MAXHEIGHT = 80;
+    var div = document.getElementById('img_preview');
+    if (file.files && file.files[0])
+    {
+      div.innerHTML = '<img id=imghead>';
+      var img = document.getElementById('imghead');
+      img.onload = function(){
+        var rect = clacImgZoomParam(MAXWIDTH, MAXHEIGHT, img.offsetWidth, img.offsetHeight);
+        img.height = rect.height;
+        img.style.marginTop = rect.top+'px';
+      }
+      var reader = new FileReader();
+      reader.onload = function(evt){img.src = evt.target.result;}
+      reader.readAsDataURL(file.files[0]);
+    }
+    else
+    {
+      var sFilter='filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(sizingMethod=scale,src="';
+      file.select();
+      var src = document.selection.createRange().text;
+      div.innerHTML = '<img id=imghead>';
+      var img = document.getElementById('imghead');
+      img.filters.item('DXImageTransform.Microsoft.AlphaImageLoader').src = src;
+      var rect = clacImgZoomParam(MAXWIDTH, MAXHEIGHT, img.offsetWidth, img.offsetHeight);
+      status =('rect:'+rect.top+','+rect.left+','+rect.width+','+rect.height);
+      div.innerHTML = "<div id=divhead style='width:"+rect.width+"px;height:"+rect.height+"px;margin-top:"+rect.top+"px;margin-left:"+rect.left+"px;"+sFilter+src+"\"'></div>";
+    }
+  }
+
+  function clacImgZoomParam( maxWidth, maxHeight, width, height ){
+    var param = {top:0, left:0, width:width, height:height};
+    if( width>maxWidth || height>maxHeight )
+    {
+      rateWidth = width / maxWidth;
+      rateHeight = height / maxHeight;
+
+      if( rateWidth > rateHeight )
+      {
+        param.width =  maxWidth;
+        param.height = Math.round(height / rateWidth);
+      }else
+      {
+        param.width = Math.round(width / rateHeight);
+        param.height = maxHeight;
+      }
+    }
+
+    param.left = Math.round((maxWidth - param.width) / 2);
+    param.top = Math.round((maxHeight - param.height) / 2);
+    return param;
+  }
+
+  $(function(){
+    $("#user_avatar").change(function() {
+      previewImage(this);
+    });
+  });

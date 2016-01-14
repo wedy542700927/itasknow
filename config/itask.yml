@@ -1,0 +1,17 @@
+#encoding: utf-8
+defaults: &defaults
+  itask:
+    domain: http://itasknow.herokuapp.com
+    default_page_size: 5
+    comments_page_size: 10
+  mailer:
+    address: smtp.163.com
+    port: 25
+    user_name: createdayandnight@163.com
+    password: zhangwei520
+
+development:
+  <<: *defaults
+
+production:
+  <<: *defaults

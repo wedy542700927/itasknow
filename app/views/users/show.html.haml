@@ -1,0 +1,46 @@
+.row.inner.edge
+  .col-md-9.layout-main
+    .info_content
+      .h3
+        =@user.nickname
+      .row
+        .col-md-2.text-left
+          %span.user_info_avatar
+            = avatar @user
+        .col-md-10
+          %p
+            %span.icon.icon-user
+              =@user.name
+          %p
+            %span.icon.icon-bookmark
+              =@user.student_id
+          %p
+            %span.icon.icon-envelope
+              =@user.email
+          %br
+          %p
+            =@user.description
+        - if @current_user.present? && @user.id!=@current_user.id
+          .p.text-right
+            =link_to user_path(@current_user) do
+              %span.icon.icon-arrow-left
+                返回个人主页
+    %br
+    %br
+    %ul.nav.nav-pills{role: 'tablist'}
+      %li.text-right{role: 'presentation', class: "#{'active' if !params[:require].present? or params[:require]=='issue' }"}
+        = link_to user_path(@user,:require=>'issue') do
+          发出任务
+          =@res0.count
+      %li.text-right{role: 'presentation', class: "#{'active' if  params[:require]=='finish' }"}
+        = link_to user_path(@user,:require=>'finish') do
+          完成任务
+          =@res1.count
+      %li.text-right{role: 'presentation', class: "#{'active' if  params[:require]=='message' }"}
+        = link_to user_path(@user,:require=>'message') do
+          历史操作
+          =@res2.count
+    .pane#userpane
+      = render 'info_tab'
+
+  .sidebar.col-md-3.layout-secondary.hidden-xs.hidden-sm

@@ -1,0 +1,27 @@
+.row.inner.edge
+  .col-md-9.layout-main
+    %span.main-title.icon.icon-list-alt
+      %span.main-title
+        结果
+    %p.line
+    %p
+      %ul.nav.nav-tabs{role: "tablist"}
+        %li.active
+          = link_to '#itasks_tab', role: 'tab', 'data-toggle'=>'tab' do
+            任务
+            %span.badge
+              = "#{@itasks.count|| 0}"
+        %li
+          = link_to '#categories_tab', role: 'tab', 'data-toggle'=>'tab' do
+            类别
+            %span.badge
+              = "#{@categories.count|| 0}"
+        %li
+          = link_to '#users_tab', role: 'tab', 'data-toggle'=>'tab' do
+            用户
+            %span.badge
+              = "#{@users.count|| 0}"
+      .pane#searchpane
+        = render partial: 'search_tab'
+
+  .sidebar.col-md-3.layout-secondary.hidden-xs.hidden-sm

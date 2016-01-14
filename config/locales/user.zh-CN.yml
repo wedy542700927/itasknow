@@ -1,0 +1,12 @@
+#encoding: utf-8
+zh-CN:
+  activerecord:
+    models:
+      user: '用户'
+    attributes:
+      user:
+        username: '用户名'
+        email: '邮箱'
+        password: '密码'
+        password_confirmation: '确认密码'
+        nickname: '昵称'

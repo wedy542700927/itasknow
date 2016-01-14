@@ -1,0 +1,15 @@
+.text-left.ui-sortable
+  %h4 任务分类
+  %ul.nav.bs-docs-sidenav
+    %li
+      = link_to tasks_path, remote: true do
+        全部
+        %span.badge
+          = "#{get_tasks_count()}篇"
+    - get_categories().each do |category|
+      %li
+        = link_to tasks_path(c: category.id), remote: true do
+          = category.name
+          %span.badge
+            = "#{get_tasks_count(category)|| 0}篇"
+

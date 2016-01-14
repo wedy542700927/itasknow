@@ -1,0 +1,4 @@
+- if @result[:status]
+  :plain
+    $('#task_star').html(" #{@result[:star_count]}");
+    $('#task_star').parent('a').attr('href', 'javascript:void(0);').addClass('disabled');

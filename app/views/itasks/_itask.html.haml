@@ -1,0 +1,43 @@
+.row
+  .col-md-1.text-center
+    %span.itask_avatar
+      = avatar itask.user
+    %p
+      =link_to itask.user.nickname, user_path(itask.user),class: 'nickname'
+  .itask_content.col-md-11
+    %h3.row
+      .col-md-9
+        = link_to itask.title, task_path(itask), target: '_blank',class: 'itask_title'
+      .col-md-3
+        - if itask.status==0
+          .text-right.text-success
+            [待接受]
+        - if itask.status==1
+          .text-right.text-primary
+            [进行中]
+        - if itask.status==2
+          .text-right.text-warning
+            [已完成]
+        - if itask.status==3
+          .text-right.text-danger
+            [已关闭]
+        / - get_tags(itask).each do |tag|
+    %p
+      %span.label.label-primary
+        = itask.category.name
+      %span.label.label-warning
+        = itask.award
+      %span.label.label-danger
+        = itask.pledge           
+    %p
+      %span.icon.icon-time(data-toggle="tooltip" data-placement="bottom" title="发表时间")
+        = itask.updated_at.strftime('%Y-%m-%d %H:%M')
+      %span.icon.icon-eye-open(data-toggle="tooltip" data-placement="bottom" title="浏览数")
+        = itask.view_count || 0
+      %span.icon.icon-thumbs-up(data-toggle="tooltip" data-placement="bottom" title="称赞数")
+        = itask.star_count || 0
+      %span.icon.icon-comments(data-toggle="tooltip" data-placement="bottom" title="评论数")
+        = itask.comments_count || 0
+    .row-fluid.itask_des
+      %p
+        = itask.content[0..300]

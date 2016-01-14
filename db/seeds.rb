@@ -1,0 +1,23 @@
+# This file should contain all the record creation needed to seed the database with its default values.
+# The data can then be loaded with the rake db:seed (or created alongside the db with db:setup).
+#
+# Examples:
+#
+#   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
+#   Mayor.create(name: 'Emanuel', city: cities.first)
+
+
+user = User.new username: 'test001', nickname: '会飞的猩猩',password: 'test001', password_confirmation: 'test001', email: '542700927@qq.com',credits: 10,admin: false, activation: 1
+puts user.save! ? 'add user success.' : 'add user fail!'
+
+user = User.new username: 'test002',nickname: '对面的女孩看过来', password: 'test002',password_confirmation: 'test002', email: '137372247@qq.com',credits: 10, admin: false, activation: 1
+puts user.save! ? 'add user success.' : 'add user fail!'
+# 添加分类
+category = Category.new name: '帮取物',avatar:'/images/bangquwu.png'
+puts category.save! ? 'add category success.' : 'add category fail!'
+category = Category.new name: '求资源',avatar:'/images/qiuziyuan.png'
+puts category.save! ? 'add category success.' : 'add category fail!'
+category = Category.new name: '问问题',avatar:'/images/wenwenti.jpg'
+puts category.save! ? 'add category success.' : 'add category fail!'
+category = Category.new name: '代写论文',avatar:'/images/daixie.jpg'
+puts category.save! ? 'add category success.' : 'add category fail!'

@@ -1,0 +1,37 @@
+= render partial: 'toolbar_upload_img', locals: {text_id: 'task_content'}
+
+= form_for @task, role: 'form' do |f|
+  .form-group
+    %label{for: 'task_title'} 任务标题
+    = f.text_field :title, placeholder: '任务标题', class: 'form-control'
+  .form-group
+    %label{for: 'task_category_id'} 任务分类
+    = select_tag "task[category_id]", options_for_select(get_categories_options, @task.category_id), include_blank: true, class: 'form-control'
+  .form-group
+    %label{for: 'task_award'} 奖励
+    = f.text_field :award, placeholder: '奖励，只允许0～99积分', class: 'form-control'
+  .form-group
+    %label{for: 'task_pledge'} 保证金
+    = f.text_field :pledge, placeholder: '保证金，只允许0～99积分', class: 'form-control'
+  .form-group
+    %ul.nav.nav-tabs#preview_tab{role: "tablist"}
+      %li.active
+        = link_to '任务内容', '#edit', role: 'tab', 'data-toggle'=>'tab'
+      %li
+        = link_to '预览', '#preview', role: 'tab', 'data-toggle'=>'tab'
+    .tab-content
+      .tab-pane.active#edit
+        = f.text_area :content, placeholder: '任务内容', class: 'form-control'
+      .tab-pane#preview
+  .form-group
+    = f.submit '发布', class: 'btn btn-success btn-lg btn-block'
+
+:javascript
+  $(function(){
+    $('#preview_tab a[href="#preview"]').click(function(e){
+      e.preventDefault();
+      $(this).tab('show');
+      preview('task_content', 'preview');
+    });
+  });
+

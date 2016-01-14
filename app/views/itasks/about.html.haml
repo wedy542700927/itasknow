@@ -1,0 +1,10 @@
+.text-left
+  %p
+    %h2 用户
+    = @itask ? @itask.name : '未设置'
+  %p
+    %h2 email
+    = @itask ? (link_to @itask.email, "mailto:#{@itask.email}") : '未设置'
+  %p
+    %h2 简介
+    = @itask ? @itask.description : '未设置'

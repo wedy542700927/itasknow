@@ -1,0 +1,6 @@
+- if @result[:status]
+  :plain
+    $('#task_comment_content').val("");
+    location.hash = "#comment_#{@comment.id}";
+    location.reload();
+    $("#comment_form").html("#{escape_javascript(render partial: 'tasks/comment_form', locals: {new_comment: true})}");

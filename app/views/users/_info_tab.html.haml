@@ -1,0 +1,135 @@
+.pane.pane-default
+  - if params[:require]=='message'
+    - @messages.each do |comment|
+      .p
+        .col-md-7.text-left
+          - if comment.kind==0
+            =link_to task_path(comment.task_id,:comment_id=>comment.id) + "#comment_#{comment.id}", target: '_blank' do
+              - if @current_user.present? && comment.user_id==@current_user.id
+                您
+              -else 
+                =comment.user.nickname
+              发布了任务
+              =comment.task.title
+          - if comment.kind==1
+            =link_to task_path(comment.task_id,:comment_id=>comment.id) + "#comment_#{comment.id}", target: '_blank' do
+              - if @current_user.present? && comment.user_id==@current_user.id
+                您
+              -else 
+                =comment.user.nickname
+              关闭了任务
+              =comment.task.title
+          - if comment.kind==2
+            =link_to task_path(comment.task_id,:comment_id=>comment.id) + "#comment_#{comment.id}", target: '_blank' do
+              - if @current_user.present? && comment.user_id==@current_user.id
+                您
+              -else 
+                =comment.user.nickname
+              请求接受
+              =comment.task.title
+          - if comment.kind==3
+            =link_to task_path(comment.task_id,:comment_id=>comment.id) + "#comment_#{comment.id}", target: '_blank' do
+              - if @current_user.present? && comment.user_id==@current_user.id
+                您
+              -else 
+                =comment.user.nickname
+              同意
+              =get_nickname(comment.to_user_id)
+              的接受请求
+          - if comment.kind==4
+            =link_to task_path(comment.task_id,:comment_id=>comment.id) + "#comment_#{comment.id}", target: '_blank' do
+              - if @current_user.present? && comment.user_id==@current_user.id
+                您
+              -else 
+                =comment.user.nickname
+              请求确认完成
+              =comment.task.title
+          - if comment.kind==5
+            =link_to task_path(comment.task_id,:comment_id=>comment.id) + "#comment_#{comment.id}", target: '_blank' do
+              - if @current_user.present? && comment.user_id==@current_user.id
+                您
+              -else 
+                =comment.user.nickname
+              确认
+              =get_nickname(comment.to_user_id)
+              已经完成任务
+          - if comment.kind==6
+            =link_to task_path(comment.task_id,:comment_id=>comment.id) + "#comment_#{comment.id}", target: '_blank' do
+              - if @current_user.present? && comment.user_id==@current_user.id
+                您
+              -else 
+                =comment.user.nickname
+              评论了
+              =get_nickname(comment.to_user_id)
+              的任务
+              =comment.task.title
+          - if comment.kind==7
+            =link_to task_path(comment.task_id,:comment_id=>comment.id) + "#comment_#{comment.id}", target: '_blank' do
+              - if @current_user.present? && comment.user_id==@current_user.id
+                您
+              -else 
+                =comment.user.nickname
+              在
+              =comment.task.title
+              中回复了
+              =get_nickname(comment.to_user_id)
+        .col-md-5.text-right.icomment-gray
+          -if comment.updated_at.year==DateTime.now.year
+            -if comment.updated_at.month==DateTime.now.month
+              -if comment.updated_at.day==DateTime.now.day
+                -if comment.updated_at.hour==DateTime.now.hour
+                  - if comment.updated_at.min==DateTime.now.min
+                    - if comment.updated_at.sec==DateTime.now.sec
+                      刚刚
+                    - else
+                      #{DateTime.now.sec-comment.updated_at.sec}秒前
+                  - else 
+                    #{DateTime.now.min-comment.updated_at.min}分钟前
+                -else
+                  #{DateTime.now.hour-comment.updated_at.hour}个小时前
+              -else
+                #{DateTime.now.day-comment.updated_at.day}天前
+            -else 
+              #{DateTime.now.month-comment.updated_at.month}个月前
+          -else 
+            #{DateTime.now.year-comment.updated_at.year}年前
+    #paginate
+      = paginate @messages, remote: true   
+  -else
+    - if !params[:require].present? or params[:require]=='issue'
+      - @tasks=@issue_tasks
+    - elsif params[:require]=='finish'
+      - @tasks=@finish_tasks
+    - @tasks.each do |task|
+      .p
+        .col-md-7.text-left
+          - if task.status==0
+            = link_to task.title,task_path(task),target: '_blank',class:'itask-success'
+          - if task.status==1
+            = link_to task.title,task_path(task),target: '_blank',class:'itask-primary'
+          - if task.status==2
+            = link_to task.title,task_path(task),target: '_blank',class:'itask-warning'
+          - if task.status==3
+            = link_to task.title,task_path(task),target: '_blank',class:'itask-danger'
+        .col-md-5.text-right.itask-gray
+          -if task.updated_at.year==DateTime.now.year
+            -if task.updated_at.month==DateTime.now.month
+              -if task.updated_at.day==DateTime.now.day
+                -if task.updated_at.hour==DateTime.now.hour
+                  - if task.updated_at.min==DateTime.now.min
+                    - if task.updated_at.sec==DateTime.now.sec
+                      刚刚
+                    - else
+                      #{DateTime.now.sec-task.updated_at.sec}秒前
+                  - else 
+                    #{DateTime.now.min-task.updated_at.min}分钟前
+                -else
+                  #{DateTime.now.hour-task.updated_at.hour}个小时前
+              -else
+                #{DateTime.now.day-task.updated_at.day}天前
+            -else 
+              #{DateTime.now.month-task.updated_at.month}个月前
+          -else 
+            #{DateTime.now.year-task.updated_at.year}年前
+    #paginate
+      = paginate @tasks, remote: true

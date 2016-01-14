@@ -1,0 +1,54 @@
+.panel.panel-dfault{id: "comment_#{comment.id}"}
+  .panel-body
+    .row
+      .col-md-1.text-center
+        %span.comment_avatar
+          = avatar comment.user
+        %p
+          =link_to comment.user.nickname,user_path(comment.user),class: 'nickname'
+      .comment_content.col-md-9.text-left{id: "comment_#{comment.id}_body"}
+        - if comment.kind==0
+          发布任务
+        - if comment.kind==1
+          关闭任务
+        - if comment.kind==2
+          请求接受任务
+        - if comment.kind==3
+          同意
+          = link_to get_nickname(@task.taker_id), user_path(@task.taker_id),class: 'nickname'
+          的接受请求
+        - if comment.kind==4
+          请求确认完成
+        - if comment.kind==5
+          确认
+          = link_to get_nickname(@task.taker_id), user_path(@task.taker_id),class: 'nickname'
+          已经完成任务
+        - if comment.kind==6
+          = raw sanitize(markdown_parser(comment.content))
+        - if comment.kind==7
+          回复
+          =link_to get_nickname(comment.to_user_id),user_path(comment.to_user_id),class: 'nickname'
+          ：
+          = raw sanitize(markdown_parser(comment.content))
+    .row.comment_footer
+      %span.text-left.col-md-6
+        %span.icon.icon-time(data-toggle="tooltip" data-placement="bottom" title="评论时间")
+          = "#{comment.updated_at.strftime('%Y-%m-%d %H:%M:%S')}"
+      %span.col-md-6.text-right
+        - if (comment.kind==6 or comment.kind==7) && current_user_can_edit_comment?(comment) 
+          / = link_to edit_task_comment_path(@task, comment), remote: true do
+          /   %span.icon.icon-edit(data-toggle="tooltip" data-placement="bottom" title="编辑")
+          = link_to task_comment_path(@task, comment), method: 'delete', remote: true, "data-confirm"=> '确定删除吗？' do
+            %span.icon.icon-trash(data-toggle="tooltip" data-placement="bottom" title="删除")
+        - if   (comment.kind==6 or comment.kind==7) && current_user_can_reply_comment?(comment)
+          = link_to '#comment_form', {:onclick => "$('#task_comment_content').val('回复#{comment.user.nickname}：');$('#to_user_id').val(#{comment.user.id});"}  do
+            %span.icon.icon-comments(data-toggle="tooltip" data-placement="bottom" title="回复")
+        - if  comment.kind==2 && @task.status==0 && current_user_is_owner?(@task) 
+          - if comment.user.credits>=@task.pledge
+            = link_to agree_task_path(@task,:user_id=>comment.user_id), method: :post, remote: true, "data-confirm"=> '确定同意吗？' do
+              %span.icon.icon-ok(data-toggle="tooltip" data-placement="bottom" title="同意请求")
+          - else
+            对方积分不足，无法提供保证金
+        - if  comment.kind==4 && @task.status==1 && current_user_is_owner?(@task) 
+          = link_to agree_task_path(@task,:user_id=>comment.user_id), method: :post, remote: true, "data-confirm"=> '确认完成吗？' do
+            %span.icon.icon-ok(data-toggle="tooltip" data-placement="bottom" title="确认完成")

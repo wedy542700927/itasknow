@@ -1,0 +1,12 @@
+.row.inner.edge
+  .col-md-9.layout-main
+    %span.main-title.icon.icon-th-list
+      %span.main-title
+        =@category.name
+    %p.line
+    .row
+      = render 'status_sidebar'
+      .col-md-10#mypane
+        = render 'tab'
+
+  .sidebar.col-md-3.layout-secondary.hidden-xs.hidden-sm

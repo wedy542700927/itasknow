@@ -1,0 +1,89 @@
+.task_show
+  - if flash[:success].present?
+    .alert.alert-success
+      %a.close{"data-dismiss"=>"alert"} &times;
+      %span
+        = flash[:success]
+  = render partial: 'error'
+  .task-title.row
+    .col-md-8
+      = @task.title
+    .col-md-3
+      - if @task.status==0
+        .text-right.text-success
+          [待接受]
+      - if @task.status==1
+        .text-right.text-primary
+          [进行中]
+      - if @task.status==2
+        .text-right.text-warning
+          [已完成]
+      - if @task.status==3
+        .text-right.text-danger
+          [已关闭]
+    .col-md-1
+      - if @task.status==0 && current_user_is_owner?(@task) 
+        = link_to task_path(@task), method: 'delete', "data-confirm"=> "确定关闭吗？" do
+          .btn.btn-danger
+            关闭
+      - if @task.status==0 && current_user_can_require_take_task?(@task)
+        = link_to  take_task_path(@task), method: :post, "data-confirm"=> "确定请求接受吗？" do
+          .btn.btn-primary
+            接受
+      - if @task.status==1 &&  current_user_can_require_finish_task?(@task) 
+        = link_to  finish_task_path(@task), method: :post, "data-confirm"=> "确定请求确认完成吗？" do
+          .btn.btn-warning
+            完成
+  %p
+    发布者：
+    =link_to @task.user.nickname,user_path(@task.user),class: 'nickname'
+    - if @task.taker_id.present?
+      - @taker_nickname=get_nickname(@task.taker_id)
+      接受者：
+      =link_to @taker_nickname,user_path(@task.taker_id),class: 'nickname'
+    分类：
+    = link_to @task.category.name, category_path(@task.category)
+    奖励：
+    %span.label.label-warning
+      = @task.award
+    保证金：
+    %span.label.label-danger
+      = @task.pledge
+  %p           
+    %span.icon.icon-time(data-toggle="tooltip" data-placement="bottom" title="发表时间")
+      = @task.updated_at.strftime('%Y-%m-%d %H:%M')
+    %span.icon.icon-eye-open(data-toggle="tooltip" data-placement="bottom" title="浏览")
+      = @task.view_count || 1
+    - if current_user_can_star?(@task)
+      = link_to star_task_path(@task), method: :post, remote: 'true' do
+        %span.icon.icon-thumbs-up#task_star(data-toggle="tooltip" data-placement="bottom" title="称赞")
+          = @task.star_count || 0
+    - else
+      %span.icon.icon-thumbs-up(data-toggle="tooltip" data-placement="bottom" title="称赞数")
+        = @task.star_count || 0
+    %span.icon.icon-comments(data-toggle="tooltip" data-placement="bottom" title="评论")
+      = @task.comments_count || 0
+    %span
+      = social_share_button_tag(@task.title)
+
+  .panel.panel-dfault
+    .panel-body#task_content_show
+      / = raw markdown_parser(@task.content)
+
+  %h3 评论：
+  #comments_content
+    = render partial: 'comments'
+
+  - if is_logined?
+    #comment_form
+      = render partial: 'comment_form'
+  - else
+    .jumbotron
+      %h2
+        = link_to '登录', login_path
+        后可评论
+
+:javascript
+  $(function(){
+    $('#task_content_show').html("#{escape_javascript sanitize(markdown_parser(@task.content))}");
+  });

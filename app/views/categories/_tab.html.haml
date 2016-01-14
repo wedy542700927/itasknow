@@ -1,0 +1,12 @@
+.pane.pane-default
+  - @tasks.each do |task|
+    .row
+      .col-md-5.text-left
+        = link_to task.title,task_path(task),target: '_blank',class: 'itask_title'
+      .col-md-3.text-left
+        = link_to task.user.nickname,user_path(task.user),class: 'nickname',target: '_blank'
+      .col-md-4.text-left
+        %span.icon.icon-time
+        = "#{task.updated_at.strftime('%Y-%m-%d %H:%M:%S')}"
+  #paginate
+    = paginate @tasks, remote: true
