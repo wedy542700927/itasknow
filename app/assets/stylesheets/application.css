@@ -58,11 +58,6 @@ ul {
    border-radius:5px;            /* W3C syntax */
 }
 
-.active a {
-    color: #428bca !important;
-    background-color: #eeeeee !important;
-}
-
 #task_content {
     height: 400px;
 }

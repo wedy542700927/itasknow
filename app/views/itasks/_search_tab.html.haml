@@ -6,3 +6,23 @@
     - @categories.each do |category|
       = render partial: 'categories/category', locals: {category: category}
   .tab-pane#users_tab
+    -@users.each do |user|
+      .info_content
+        =link_to user.nickname, users_path(user),class: 'category_name'
+        .row
+          .col-md-2.text-left
+            %span.user_info_avatar
+              = avatar user
+          .col-md-10
+            %p
+              %span.icon.icon-user
+                =user.name
+            %p
+              %span.icon.icon-bookmark
+                =user.student_id
+            %p
+              %span.icon.icon-envelope
+                =user.email
+            %br
+            %p
+              =user.description
