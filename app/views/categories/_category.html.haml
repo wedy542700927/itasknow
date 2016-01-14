@@ -13,6 +13,11 @@
           .col-md-7.text-left
             = link_to task.title,task_path(task),target: '_blank',class:'itask_title'
           .col-md-5.text-right.itask-gray
+            -task.updated_at.year-DateTime.now.year
+            -task.updated_at.month-DateTime.now.month
+            -task.updated_at.day-DateTime.now.day
+            -task.updated_at.min-DateTime.now.min
+            -task.updated_at.sec-DateTime.now.sec
             -if task.updated_at.year==DateTime.now.year
               -if task.updated_at.month==DateTime.now.month
                 -if task.updated_at.day==DateTime.now.day
