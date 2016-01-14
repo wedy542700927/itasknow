@@ -59,7 +59,6 @@ Rails.application.routes.draw do
   resources :itasks, only:[:index] do
     collection do
       get 'search'
-      get 'about'
       post 'preview'
     end
 
