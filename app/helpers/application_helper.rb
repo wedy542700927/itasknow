@@ -30,6 +30,43 @@ module ApplicationHelper
     tags = task.tags || ''
     tags.split(',')
   end
+  def get_time(updated_at)
+    result=[]
+    timenow=DateTime.now
+    if updated_at.year==timenow.year
+      if updated_at.month==timenow.month
+        if updated_at.day==timenow.day
+          if updated_at.hour==timenow.hour
+            if updated_at.min==timenow.min
+              if updated_at.sec==timenow.sec
+                result[0]=0;
+                result[1]=0
+              else
+                result[0]=1
+                result[1]=timenow.sec-updated_at.sec
+              end
+            else
+              result[0]=2
+              result[1]=timenow.min-updated_at.min
+            end
+          else
+            result[0]=3
+            result[1]=timenow.hour-updated_at.hour
+          end
+        else
+          result[0]=4
+          result[1]=timenow.day-updated_at.day
+        end
+      else
+        result[0]=5
+        result[1]=timenow.month-updated_at.month
+      end
+    else
+      result[0]=6
+      result[1]=timenow.year-updated_at.year
+   end
+   result
+  end
   def get_tasks_count(category=nil,status=nil)
   # def get_tasks_count(user=nil)
   #   if user.nil?
@@ -44,7 +81,6 @@ module ApplicationHelper
     #   Task.find_by_sql("select * from tasks where user_id = #{user.id}" ).length #####
     # end
   end
-
   def itask_title
     return 'Itask'
   end

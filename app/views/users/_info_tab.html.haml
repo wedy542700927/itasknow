@@ -74,26 +74,21 @@
               中回复了
               =get_nickname(comment.to_user_id)
         .col-md-5.text-right.icomment-gray
-          -timenow=DateTime.now
-          -if comment.updated_at.year==timenow.year
-            -if comment.updated_at.month==timenow.month
-              -if comment.updated_at.day==timenow.day
-                -if comment.updated_at.hour==timenow.hour
-                  - if comment.updated_at.min==timenow.min
-                    - if comment.updated_at.sec==timenow.sec
-                      刚刚
-                    - else
-                      #{timenow.sec-comment.updated_at.sec}秒前
-                  - else 
-                    #{timenow.min-comment.updated_at.min}分钟前
-                -else
-                  #{timenow.hour-comment.updated_at.hour}个小时前
-              -else
-                #{timenow.day-comment.updated_at.day}天前
-            -else 
-              #{timenow.month-comment.updated_at.month}个月前
-          -else 
-            #{timenow.year-comment.updated_at.year}年前
+          -result=get_time(comment.updated_at)
+          -if result[0]==0
+            刚刚
+          -if result[0]==1
+            #{result[1]}秒前
+          -if result[0]==2
+            #{result[1]}分钟前
+          -if result[0]==3
+            #{result[1]}个小时前
+          -if result[0]==4
+            #{result[1]}天前
+          -if result[0]==5
+            #{result[1]}个月前
+          -if result[0]==6
+            #{result[1]}年前
     #paginate
       = paginate @messages, remote: true   
   -else
