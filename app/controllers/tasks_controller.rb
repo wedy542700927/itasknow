@@ -1,8 +1,8 @@
 #encoding: utf-8
 class TasksController < ApplicationController
-  before_filter :check_current_user_is_not_admin, only: [:new, :create, :edit, :update]
+  # before_filter :check_current_user_is_not_admin, only: [:new, :create, :edit, :update]
   before_filter :task, only: [:show, :destroy, :star, :take,:finish,:agree]
-
+  before_filter :require_login, only: [:new, :create, :destroy,:star, :take,:finish,:agree]
   def index
     redirect_to root_path
   end

@@ -83,6 +83,6 @@ module ApplicationHelper
     # end
   end
   def itask_title
-    return 'Itask'
+    return 'ITASK'
   end
 end

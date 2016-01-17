@@ -29,7 +29,7 @@ class UsersController < ApplicationController
       flash.now[:error] = "用户还没有激活，<a href='#{send_active_mail_users_path}'>点此</a>发送激活邮件。"
       return render 'login', layout: 'register'
     end
-    if @user && @user.check_password(params[:user][:password])
+    if @user && @user.check_password(params[:user][:password]) && !@user.admin
       to_login @user
       if !@user.last_login_time.present? 
         @user.update_attributes(:last_login_time=>DateTime.now,:credits=>@user.credits+10)
