@@ -12,7 +12,7 @@ class User < ActiveRecord::Base
   # validates :credits,  numericality:{allow_nil: false,greater_than_or_equal_to: 0}
   # validates :student_id, format: {with: /\A[0-9]+\z/}, length: {minimum: 15, maximum: 15}, uniqueness: true#
   validates :email, format: {with: /\A[a-zA-Z0-9\-]+@[a-zA-Z0-9-]+\.(org|com|cn|io|net|cc|me)\z/}, uniqueness: true
-  validates :password, length: {minimum: 6}, confirmation: true, if: :need_valid_password?
+  validates :password, length: {minimum: 6, maximum: 16}, confirmation: true, if: :need_valid_password?
   validates :nickname, length: {minimum: 3, maximum: 10}, uniqueness: true
   # validate :validate_credits
   # def nickname
