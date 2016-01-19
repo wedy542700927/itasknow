@@ -5,7 +5,7 @@
 #
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
-user = User.new username: 'admin002',nickname: '我是管理员', password: 'admin002',password_confirmation: 'admin002', email: '137372247@163.com',credits: 999, admin: true, activation: 1
+user = User.new username: 'admin002',nickname: '管理员不要删我', password: 'admin002',password_confirmation: 'admin002', email: '137372247@163.com',credits: 999, admin: true, activation: 1
 puts user.save! ? 'add user success.' : 'add user fail!'
 
 # user = User.new username: 'test001', nickname: '会飞的猩猩',password: 'test001', password_confirmation: 'test001', email: '542700927@qq.com',credits: 10,admin: false, activation: 1
