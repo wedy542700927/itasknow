@@ -20,7 +20,7 @@ class ItasksController < ApplicationController
     res1 = res1.where("name like ?", "%#{params[:keyword]}%") if params[:keyword].present?
     @categories = res1.order(order)
     order = 'nickname asc'
-    res2 = User
+    res2 = User.where("admin = ?", false)
     res2 = res2.where("nickname like ?", "%#{params[:keyword]}%") if params[:keyword].present?
     @users = res2.order(order)
     respond_to do |format|
