@@ -105,6 +105,7 @@
       = yield
       = render partial: 'layouts/footer'
 :javascript
+  $("div.navbar-fixed-top").autoHidingNavbar();
   $(function(){
     $('#search_button').click(function(){
       $('#search_form').submit();
